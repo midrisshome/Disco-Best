@@ -1,7 +1,10 @@
 import { NavLink } from 'react-router-dom';
 import { Disc3, MapPin, Phone, Mail, Facebook, Instagram, Twitter } from 'lucide-react';
+import { useSiteContent } from '../../context/SiteContentContext';
 
 export function Footer() {
+  const { content } = useSiteContent();
+
   return (
     <footer className="bg-zinc-950 border-t border-white/10 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,6 +34,7 @@ export function Footer() {
               <li><NavLink to="/about" className="hover:text-cyan-400 transition-colors">About Us</NavLink></li>
               <li><NavLink to="/services" className="hover:text-cyan-400 transition-colors">Services</NavLink></li>
               <li><NavLink to="/gallery" className="hover:text-cyan-400 transition-colors">Gallery</NavLink></li>
+              <li><NavLink to="/news" className="hover:text-cyan-400 transition-colors">News</NavLink></li>
               <li><NavLink to="/admin" className="hover:text-purple-400 transition-colors flex items-center gap-2">Admin Dashboard</NavLink></li>
             </ul>
           </div>
@@ -38,11 +42,9 @@ export function Footer() {
           <div>
             <h3 className="font-display text-lg tracking-wider mb-6 text-white">Services</h3>
             <ul className="flex flex-col gap-4 text-sm text-zinc-400">
-              <li>Sound System Rental</li>
-              <li>DJ Setup & Equipment</li>
-              <li>Outdoor Event Sound</li>
-              <li>Church Programs</li>
-              <li>Wedding & Party Setup</li>
+              {content.services.slice(0, 5).map(srv => (
+                <li key={srv.id}>{srv.title}</li>
+              ))}
             </ul>
           </div>
 
@@ -51,19 +53,19 @@ export function Footer() {
             <ul className="flex flex-col gap-4 text-sm text-zinc-400">
               <li className="flex gap-3">
                 <MapPin className="w-5 h-5 text-cyan-400 shrink-0" />
-                <span>Idriss Drive, Devil Hold,<br />Freetown, Sierra Leone</span>
+                <span>{content.contact.location1},<br />{content.contact.location2}</span>
               </li>
               <li className="flex gap-3 items-center">
                 <Phone className="w-5 h-5 text-purple-400 shrink-0" />
-                <span>+232 79 061894</span>
+                <span>{content.contact.phone1}</span>
               </li>
               <li className="flex gap-3 items-center">
                 <Phone className="w-5 h-5 text-purple-400 shrink-0" />
-                <span>+232 75 273995</span>
+                <span>{content.contact.phone2}</span>
               </li>
               <li className="flex gap-3 items-center">
                 <Mail className="w-5 h-5 text-green-400 shrink-0" />
-                <span>midresshome@gmail.com</span>
+                <span>{content.contact.email}</span>
               </li>
             </ul>
           </div>

@@ -1,8 +1,13 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Volume2, Mic2, Disc3 } from 'lucide-react';
+import { ArrowRight, Volume2, Mic2, Disc3, Disc, MapPinned, Church, PartyPopper } from 'lucide-react';
+import { useSiteContent } from '../context/SiteContentContext';
+
+const icons: Record<string, any> = { Volume2, Disc, MapPinned, Church, PartyPopper, Mic2, Disc3 };
 
 export default function Home() {
+  const { content } = useSiteContent();
+
   return (
     <div className="bg-zinc-950 min-h-screen">
       {/* Hero Section */}
@@ -30,12 +35,12 @@ export default function Home() {
             </div>
             
             <h1 className="text-6xl md:text-8xl font-display uppercase tracking-tight text-white leading-[0.9] mb-8">
-              Bring Your Event to <br/>
-              <span className="text-gradient">LIFE WITH DISCO BEST</span>
+              {content.home.heroHeadlinePart1} <br/>
+              <span className="text-gradient">{content.home.heroHeadlinePart2}</span>
             </h1>
             
             <p className="text-xl md:text-2xl text-zinc-300 font-light max-w-2xl mb-12">
-              Professional Sound System Rentals for Parties, Weddings, Church Events & More. High fidelity, unmatched energy.
+              {content.home.heroSubtext}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6">
@@ -72,26 +77,25 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { title: 'Sound System Rental', icon: Volume2, desc: 'High-wattage active and passive speakers for any venue size.' },
-              { title: 'DJ Setup', icon: Disc3, desc: 'Professional decks, mixers, and controllers for your DJs.' },
-              { title: 'Church Programs', icon: Mic2, desc: 'Crystal clear PA systems tailored for spoken word and live worship bands.' }
-            ].map((srv, idx) => (
-              <motion.div 
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="bg-zinc-900/50 border border-white/5 p-8 rounded-2xl hover:border-cyan-400/50 transition-colors group"
-              >
-                <div className="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center mb-6 group-hover:bg-cyan-900/30 group-hover:text-cyan-400 transition-colors">
-                  <srv.icon className="w-8 h-8 text-zinc-400 group-hover:text-cyan-400 pb-1" />
-                </div>
-                <h3 className="text-2xl font-display tracking-wide mb-3">{srv.title}</h3>
-                <p className="text-zinc-400 font-light leading-relaxed">{srv.desc}</p>
-              </motion.div>
-            ))}
+            {content.services.slice(0, 3).map((srv, idx) => {
+              const IconComponent = icons[srv.iconName] || Volume2;
+              return (
+                <motion.div 
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="bg-zinc-900/50 border border-white/5 p-8 rounded-2xl hover:border-cyan-400/50 transition-colors group"
+                >
+                  <div className="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center mb-6 group-hover:bg-cyan-900/30 group-hover:text-cyan-400 transition-colors">
+                    <IconComponent className="w-8 h-8 text-zinc-400 group-hover:text-cyan-400 pb-1" />
+                  </div>
+                  <h3 className="text-2xl font-display tracking-wide mb-3">{srv.title}</h3>
+                  <p className="text-zinc-400 font-light leading-relaxed">{srv.desc}</p>
+                </motion.div>
+              );
+            })}
           </div>
           
           <div className="mt-8 text-center md:hidden">

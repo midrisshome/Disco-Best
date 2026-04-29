@@ -1,6 +1,9 @@
 import { Phone, Mail, MapPinned } from 'lucide-react';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export default function Contact() {
+  const { content } = useSiteContent();
+
   return (
     <div className="bg-zinc-950 min-h-screen pt-20 pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -21,9 +24,9 @@ export default function Contact() {
             </div>
             <h3 className="text-xl font-display uppercase tracking-wider text-white mb-4">Call Us</h3>
             <div className="space-y-2 text-zinc-300">
-               <p><a href="tel:+23279061894" className="hover:text-cyan-400 transition-colors">+232 79 061894</a></p>
-               <p><a href="tel:+23275273995" className="hover:text-cyan-400 transition-colors">+232 75 273995</a></p>
-               <p><a href="tel:+23276613610" className="hover:text-cyan-400 transition-colors">+232 76 613610</a></p>
+               <p><a href={`tel:${content.contact.phone1.replace(/\s/g, '')}`} className="hover:text-cyan-400 transition-colors">{content.contact.phone1}</a></p>
+               <p><a href={`tel:${content.contact.phone2.replace(/\s/g, '')}`} className="hover:text-cyan-400 transition-colors">{content.contact.phone2}</a></p>
+               <p><a href={`tel:${content.contact.phone3.replace(/\s/g, '')}`} className="hover:text-cyan-400 transition-colors">{content.contact.phone3}</a></p>
             </div>
           </div>
 
@@ -33,7 +36,7 @@ export default function Contact() {
             </div>
             <h3 className="text-xl font-display uppercase tracking-wider text-white mb-4">Email Us</h3>
             <div className="space-y-2 text-zinc-300">
-               <p><a href="mailto:midresshome@gmail.com" className="hover:text-cyan-400 transition-colors break-all">midresshome@gmail.com</a></p>
+               <p><a href={`mailto:${content.contact.email}`} className="hover:text-cyan-400 transition-colors break-all">{content.contact.email}</a></p>
             </div>
           </div>
 
@@ -43,8 +46,8 @@ export default function Contact() {
             </div>
             <h3 className="text-xl font-display uppercase tracking-wider text-white mb-4">Location</h3>
             <div className="space-y-2 text-zinc-300">
-               <p>Idriss Drive, Devil Hold</p>
-               <p>Freetown, Sierra Leone</p>
+               <p>{content.contact.location1}</p>
+               <p>{content.contact.location2}</p>
             </div>
           </div>
         </div>
